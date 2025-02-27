@@ -1,45 +1,54 @@
-# Variables
 NAME = so_long
+
+# Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-LIBMLX = minilibx-linux/libmlx.a
-MLX_PATH = minilibx-linux
-LIBFT = utils/libft/libft.a
-UTILS_PATH = utils
-INCLUDE = -I inc -I $(UTILS_PATH)/inc -I $(MLX_PATH)
+CFLAGS = -Wall -Wextra -Werror -g
+MLX_FLAGS = -lX11 -lXext
 
-# Fichiers sources
-SRCS = src/so_long.c src/parse/*.c
+# Directories
+SRC_DIR = src
+INC_DIR = inc
+OBJ_DIR = obj
+UTILS_DIR = utils
+MLX_DIR = minilibx-linux
 
-# Objets
-OBJS = $(SRCS:.c=.o)
+# Source files
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
-# Règle par défaut
+# Libraries
+LIBFTPRINTF = $(UTILS_DIR)/libftprintf.a
+MLX = $(MLX_DIR)/libmlx.a
+
+# Include paths
+INCLUDES = -I$(INC_DIR) -I$(UTILS_DIR)/inc -I$(MLX_DIR)
+
 all: $(NAME)
 
-# Compiler le Makefile dans utils
-$(NAME): $(LIBFT) $(LIBMLX) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -L $(MLX_PATH) -lmlx -lm -lX11 -o $(NAME)
+$(NAME): $(OBJ_DIR) $(LIBFTPRINTF) $(MLX) $(OBJ_FILES)
+	$(CC) $(OBJ_FILES) $(LIBFTPRINTF) $(MLX) $(MLX_FLAGS) -o $(NAME)
 
-# Compiler la libft
-$(LIBFT):
-	make -C $(UTILS_PATH)/libft
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
-# Compiler la mlx
-$(LIBMLX):
-	make -C $(MLX_PATH)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# Nettoyage des objets
+$(LIBFTPRINTF):
+	make -C $(UTILS_DIR)
+
+$(MLX):
+	make -C $(MLX_DIR)
+
 clean:
-	rm -f $(OBJS)
-	make clean -C $(UTILS_PATH)/libft
-	make clean -C $(MLX_PATH)
+	rm -rf $(OBJ_DIR)
+	make -C $(UTILS_DIR) clean
+	make -C $(MLX_DIR) clean
 
-# Nettoyage complet
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C $(UTILS_PATH)/libft
-	make fclean -C $(MLX_PATH)
+	make -C $(UTILS_DIR) fclean
 
-# Recompiler
 re: fclean all
+
+.PHONY: all clean fclean re

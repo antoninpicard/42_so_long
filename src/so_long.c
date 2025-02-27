@@ -12,13 +12,43 @@
 
 #include "so_long.h"
 
+int	close_window(void *param)
+{
+	(void)param;
+	ft_printf("Closing window...\n");
+	exit(0);
+	return (0);
+}
+
+int	handle_keypress(int keycode, void *param)
+{
+	(void)param;
+	if (keycode == KEY_ESC)
+	{
+		ft_printf("ESC key pressed, closing window...\n");
+		exit(0);
+	}
+	return (0);
+}
+
 int	main(void)
 {
 	void	*mlx;
-	void	*window;
+	void	*win;
 
 	mlx = mlx_init();
-	window = mlx_new_window(mlx, 800, 600, "so_long");
+	if (!mlx)
+		return (1);
+	win = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
+	if (!win)
+	{
+		mlx_destroy_display(mlx);
+		free(mlx);
+		return (1);
+	}
+	ft_printf("Window created successfully!\n");
+	mlx_hook(win, 17, 0, close_window, NULL);
+	mlx_hook(win, 2, 1L<<0, handle_keypress, NULL);
 	mlx_loop(mlx);
 	return (0);
 }
