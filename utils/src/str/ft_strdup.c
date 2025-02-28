@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 14:09:33 by anpicard          #+#    #+#             */
-/*   Updated: 2025/02/28 09:24:55 by anpicard         ###   ########.fr       */
+/*   Created: 2024/11/04 19:13:00 by anpicard          #+#    #+#             */
+/*   Updated: 2025/02/28 09:02:06 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "libft.h"
 
-int	close_window(void *param)
+char	*ft_strdup(char *src)
 {
-	(void)param;
-	ft_printf("Closing window...\n");
-	exit(0);
-	return (0);
-}
+	char	*str;
+	int		i;
 
-int	handle_keypress(int keycode, void *param)
-{
-	(void)param;
-	if (keycode == KEY_ESC)
+	i = 0;
+	str = malloc(sizeof(char) * ft_strlen(src) + 1);
+	if (str)
 	{
-		ft_printf("ESC key pressed, closing window...\n");
-		exit(0);
+		while (src[i])
+		{
+			str[i] = src[i];
+			i++;
+		}
+		str[i] = 0;
+		return (str);
 	}
 	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	t_game	game;
-
-	if (argc != 2)
-		return (print_error("Usage: ./so_long [map_path]"), 1);
-	return (1);
 }

@@ -1,41 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 14:09:33 by anpicard          #+#    #+#             */
-/*   Updated: 2025/02/28 09:24:55 by anpicard         ###   ########.fr       */
+/*   Created: 2024/09/13 15:27:29 by anpicard          #+#    #+#             */
+/*   Updated: 2025/02/28 09:02:06 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "libft.h"
 
-int	close_window(void *param)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	(void)param;
-	ft_printf("Closing window...\n");
-	exit(0);
+	size_t	i;
+
+	i = 0;
+	while (i < n && s1[i] && s1[i] == s2[i])
+		i++;
+	if (i < n)
+		return ((unsigned char) s1[i] - (unsigned char) s2[i]);
 	return (0);
-}
-
-int	handle_keypress(int keycode, void *param)
-{
-	(void)param;
-	if (keycode == KEY_ESC)
-	{
-		ft_printf("ESC key pressed, closing window...\n");
-		exit(0);
-	}
-	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	t_game	game;
-
-	if (argc != 2)
-		return (print_error("Usage: ./so_long [map_path]"), 1);
-	return (1);
 }
