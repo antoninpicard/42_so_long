@@ -13,7 +13,7 @@ UTILS_DIR = utils
 MLX_DIR = minilibx-linux
 
 # Source files
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
+SRC_FILES = src/so_long.c src/parse/map_parse.c
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 # Libraries
@@ -30,6 +30,7 @@ $(NAME): $(OBJ_DIR) $(LIBFTPRINTF) $(MLX) $(OBJ_FILES)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/parse
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
