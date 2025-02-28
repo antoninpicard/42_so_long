@@ -6,28 +6,21 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:09:33 by anpicard          #+#    #+#             */
-/*   Updated: 2025/02/28 09:24:55 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:54:20 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	close_window(void *param)
+static int	key_hook(int keycode, t_game *game)
 {
-	(void)param;
-	ft_printf("Closing window...\n");
-	exit(0);
-	return (0);
-}
-
-int	handle_keypress(int keycode, void *param)
-{
-	(void)param;
-	if (keycode == KEY_ESC)
-	{
-		ft_printf("ESC key pressed, closing window...\n");
-		exit(0);
-	}
+	if (keycode == ESC)
+		close_window(game);
+	else if (keycode == W || keycode == A || keycode == S || keycode == D)
+		move_player(game, keycode);
+	else if (keycode == ARROW_DOWN || keycode == ARROW_LEFT
+		|| keycode == ARROW_RIGHT || keycode == ARROW_UP)
+		move_player(game, keycode);
 	return (0);
 }
 
@@ -35,7 +28,17 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
+	(void)argv;
 	if (argc != 2)
 		return (print_error("Usage: ./so_long [map_path]"), 1);
-	return (1);
+	ft_memset(&game, 0, sizeof(t_game));
+	if (!parse_map(&game.map, argv[1]))
+		return (1);
+	if (!init_game(&game))
+		return (cleanup_game(&game), 1);
+	render_map(&game);
+	mlx_hook(game.win, 17, 0, close_window, &game);
+	mlx_key_hook(game.win, key_hook, &game);
+	mlx_loop(game.mlx);
+	return (0);
 }

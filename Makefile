@@ -11,9 +11,11 @@ INC_DIR = inc
 OBJ_DIR = obj
 UTILS_DIR = utils
 MLX_DIR = minilibx-linux
+PARSE_DIR = src/parse
 
 # Source files
-SRC_FILES = src/so_long.c src/utils.c src/parse/map_parse.c
+SRC_FILES = src/so_long.c src/utils.c src/game.c src/map.c src/player.c src/transparent.c \
+            $(PARSE_DIR)/map_parser.c $(PARSE_DIR)/rectangle_parser.c $(PARSE_DIR)/utils_parser.c $(PARSE_DIR)/validation.c
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 # Libraries
