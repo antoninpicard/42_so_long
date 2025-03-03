@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucnavar <lucnavar@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:23:31 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 12:28:21 by lucnavar         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:32:33 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,16 @@ int	is_valid_move(t_game *game, int x, int y)
 	return (1);
 }
 
-static void	load_victory_frames(t_game *game, void **flag_frames, char **frame_paths, int *dims)
+static void	load_victory_frames(t_game *game, void **flag_frames,
+		char **frame_paths, int *dims)
 {
 	int	i;
 
 	i = 0;
 	while (i < 12)
 	{
-		flag_frames[i] = mlx_xpm_file_to_image(game->mlx, frame_paths[i], &dims[0], &dims[1]);
+		flag_frames[i] = mlx_xpm_file_to_image(game->mlx, frame_paths[i],
+				&dims[0], &dims[1]);
 		if (!flag_frames[i])
 		{
 			while (--i >= 0)
@@ -74,7 +76,7 @@ static void	play_victory_animation(t_game *game, void **flag_frames, int *dims)
 	{
 		i = frame_count % 12;
 		mlx_clear_window(game->mlx, game->win);
-		mlx_put_image_to_window(game->mlx, game->win, flag_frames[i], 
+		mlx_put_image_to_window(game->mlx, game->win, flag_frames[i],
 			(window_width - dims[0]) / 2, (window_height - dims[1]) / 2);
 		mlx_do_sync(game->mlx);
 		usleep(83333);

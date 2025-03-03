@@ -6,15 +6,15 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 08:21:56 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 08:27:16 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:31:59 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_strcat(char *dest, const char *src)
+void	ft_strcat(char *dest, const char *src)
 {
-    while (*dest)
-        dest++;
-    ft_strcpy(dest, src);
+	while (*dest)
+		dest++;
+	ft_strcpy(dest, src);
 }

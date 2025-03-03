@@ -3,21 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucnavar <lucnavar@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:33:13 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 10:43:00 by lucnavar         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:32:42 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-# define FRAME_COUNT 7
-# define FRAME_DELAY 150000
-# define PORTAL_FRAMES (char *[]){"textures/portal/frame_1.xpm", \
-	"textures/portal/frame_2.xpm", "textures/portal/frame_3.xpm", \
-	"textures/portal/frame_4.xpm", "textures/portal/frame_5.xpm", \
-	"textures/portal/frame_6.xpm", "textures/portal/frame_7.xpm", NULL}
+#define FRAME_COUNT 7
+#define FRAME_DELAY 150000
+#define PORTAL_FRAMES                                                                                                                                                                                                                 \
+
+	(char *[])                                                                                                                                                                                                                        \
+	{                                                                                                                                                                                                                                 \
+		"textures/portal/frame_1.xpm", "textures/portal/frame_2.xpm",
+			"textures/portal/frame_3.xpm", "textures/portal/frame_4.xpm",
+			"textures/portal/frame_5.xpm", "textures/portal/frame_6.xpm",
+			"textures/portal/frame_7.xpm", NULL \
+	}
 
 void	put_image(t_game *game, void *img, int x, int y)
 {
@@ -70,8 +75,8 @@ int	render_map(t_game *game)
 					put_image(game, game->img_exit, pos[0], pos[1]);
 				if (game->map.grid[pos[1]][pos[0]] == 'C')
 					put_image(game, game->img_collectible, pos[0], pos[1]);
-				if (game->map.grid[pos[1]][pos[0]] == 'P' || 
-					game->map.grid[pos[1]][pos[0]] == 'X')
+				if (game->map.grid[pos[1]][pos[0]] == 'P'
+					|| game->map.grid[pos[1]][pos[0]] == 'X')
 					put_image(game, game->img_player, pos[0], pos[1]);
 			}
 			pos[0]++;
@@ -124,8 +129,8 @@ static int	load_images(t_game *game)
 	game->img_ground = mlx_xpm_file_to_image(game->mlx, "textures/ground.xpm",
 			&width, &height);
 	ft_printf("Loading exit image...\n");
-	game->img_exit = mlx_xpm_file_to_image(game->mlx, "textures/portal/frame_1.xpm",
-			&width, &height);
+	game->img_exit = mlx_xpm_file_to_image(game->mlx,
+			"textures/portal/frame_1.xpm", &width, &height);
 	if (!game->img_player || !game->img_wall || !game->img_collectible
 		|| !game->img_ground || !game->img_exit)
 		return (0);

@@ -6,17 +6,17 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 08:20:45 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 08:27:14 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:31:51 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void    ft_strcpy(char *dest, const char *src)
+void	ft_strcpy(char *dest, const char *src)
 {
-    while (*src)
-    {
-        *dest = *src;
-        dest++;
-        src++;
-    }
-    *dest = '\0';
+	while (*src)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*dest = '\0';
 }
