@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lucnavar <lucnavar@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 07:51:36 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 08:11:43 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:07:59 by lucnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,25 @@ void    *load_image(void *mlx, char *path)
 int animate(void *param)
 {
     t_game *data;
+    int x;
+    int y;
 
     data = (t_game *)param;
-    mlx_clear_window(data->mlx, data->win);
-    mlx_put_image_to_window(data->mlx, data->win,
-        data->img[data->frame], 0, 0);
+    y = 0;
+    while (y < data->map.height)
+    {
+        x = 0;
+        while (x < data->map.width)
+        {
+            if (data->map.grid[y][x] == 'E')
+            {
+                mlx_put_image_to_window(data->mlx, data->win,
+                    data->img[data->frame], x * TILE_SIZE, y * TILE_SIZE);
+            }
+            x++;
+        }
+        y++;
+    }
     data->frame = (data->frame + 1) % data->frame_count;
     usleep(data->frame_delay);
     return (0);
@@ -45,7 +59,10 @@ void init_animation(t_game *data, int frame_count,
 {
     int i;
 
-    data->img = (void **)malloc(sizeof(void *) * frame_count);
+    data->frame = 0;
+    data->frame_count = frame_count;
+    data->frame_delay = frame_delay;
+    data->img = malloc(sizeof(void *) * frame_count);
     if (!data->img)
     {
         write(2, "Error: Failed to allocate memory for images\n", 44);
@@ -54,15 +71,19 @@ void init_animation(t_game *data, int frame_count,
     i = 0;
     while (i < frame_count)
     {
-        data->img[i] = load_image(data->mlx, frames[i]);
+        ft_printf("Loading frame %d: %s\n", i + 1, frames[i]);
+        data->img[i] = mlx_xpm_file_to_image(data->mlx, frames[i],
+                &(int){0}, &(int){0});
         if (!data->img[i])
         {
-            write(2, "Error: Failed to load image\n", 28);
-            exit(1);
+            ft_printf("Error: Failed to load frame %d\n", i + 1);
+            while (--i >= 0)
+                mlx_destroy_image(data->mlx, data->img[i]);
+            free(data->img);
+            data->img = NULL;
+            return ;
         }
         i++;
     }
-    data->frame_count = frame_count;
-    data->frame_delay = frame_delay;
-    data->frame = 0;
+    mlx_loop_hook(data->mlx, animate, data);
 }

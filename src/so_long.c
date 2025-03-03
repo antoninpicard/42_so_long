@@ -17,10 +17,10 @@ static int	key_hook(int keycode, t_game *game)
 	if (keycode == ESC)
 		close_window(game);
 	else if (keycode == W || keycode == A || keycode == S || keycode == D)
-		move_player(game, keycode);
+		handle_keypress(keycode, game);
 	else if (keycode == ARROW_DOWN || keycode == ARROW_LEFT
 		|| keycode == ARROW_RIGHT || keycode == ARROW_UP)
-		move_player(game, keycode);
+		handle_keypress(keycode, game);
 	return (0);
 }
 

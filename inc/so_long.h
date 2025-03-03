@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lucnavar <lucnavar@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:03:17 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 08:12:28 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:43:01 by lucnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,11 @@ typedef struct s_map
 	int				width;
 	int				height;
 	int				collectibles;
-	int				exit;
-	int				player;
-	t_position		player_pos;
-	char			last_move;
+	int				exits;
+	int				players;
+	int				player_x;
+	int				player_y;
 }					t_map;
-
-typedef struct s_tile_images
-{
-	void			*player_ground;
-	void			*collect_ground;
-	void			*exit_ground;
-}					t_tile_images;
 
 typedef struct s_game
 {
@@ -71,12 +64,11 @@ typedef struct s_game
 	void			*img_collectible;
 	void			*img_exit;
 	t_map			map;
-	t_tile_images	images;
 	int				moves;
-	int				collected;
+	int				is_exiting;
 	void			**img;
-	int				frame_count;
 	int				frame;
+	int				frame_count;
 	int				frame_delay;
 }					t_game;
 
@@ -100,15 +92,26 @@ void				print_error(char *message);
 void				cleanup_game(t_game *game);
 int					close_window(t_game *game);
 int					init_game(t_game *game);
-int					render_map(t_game *game);
-int					move_player(t_game *game, int keycode);
-void				*create_transparent_image(t_game *game, void *bg_img,
-						void *fg_img);
-void				build_frame_path(char *buffer, const char *folder,
-						int frame_number);
-void				init_animation(t_game *data, int frame_count,
-						int frame_delay, char **frames);
+
+// Render functions
+void	put_image(t_game *game, void *img, int x, int y);
+int		render_map(t_game *game);
+int		move_player(t_game *game, int keycode);
+void	*create_transparent_image(t_game *game, void *bg_img,
+			void *fg_img);
+
+// Animation functions
+void	build_frame_path(char *buffer, const char *folder, int frame_number);
+void	init_animation(t_game *data, int frame_count,
+			int frame_delay, char **frames);
 void				*load_image(void *mlx, char *path);
-int					animate(void *param);
+int		animate(void *param);
+void	init_portal_animation(t_game *game);
+void	init_player_animation(t_game *game);
+void	init_collectible_animation(t_game *game);
+
+// Player functions
+int		handle_keypress(int keycode, t_game *game);
+int		is_valid_move(t_game *game, int x, int y);
 
 #endif
