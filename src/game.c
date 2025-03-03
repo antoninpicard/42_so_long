@@ -6,7 +6,7 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:33:13 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 14:32:42 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:41:33 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 #define FRAME_COUNT 7
 #define FRAME_DELAY 150000
-#define PORTAL_FRAMES                                                                                                                                                                                                                 \
 
-	(char *[])                                                                                                                                                                                                                        \
-	{                                                                                                                                                                                                                                 \
-		"textures/portal/frame_1.xpm", "textures/portal/frame_2.xpm",
-			"textures/portal/frame_3.xpm", "textures/portal/frame_4.xpm",
-			"textures/portal/frame_5.xpm", "textures/portal/frame_6.xpm",
-			"textures/portal/frame_7.xpm", NULL \
-	}
+static char	*get_portal_frame(int index)
+{
+	static char	*portal_frames[] = {"textures/portal/frame_1.xpm",
+			"textures/portal/frame_2.xpm", "textures/portal/frame_3.xpm",
+			"textures/portal/frame_4.xpm", "textures/portal/frame_5.xpm",
+			"textures/portal/frame_6.xpm", "textures/portal/frame_7.xpm", NULL};
+
+	return (portal_frames[index]);
+}
 
 void	put_image(t_game *game, void *img, int x, int y)
 {
@@ -88,7 +89,8 @@ int	render_map(t_game *game)
 
 int	init_game(t_game *game)
 {
-	char	**portal_frames;
+	char	*portal_frames[FRAME_COUNT];
+	int		i;
 
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -104,7 +106,8 @@ int	init_game(t_game *game)
 	if (!init_player_position(game))
 		return (0);
 	ft_printf("Loading portal frames...\n");
-	portal_frames = PORTAL_FRAMES;
+	for (i = 0; i < FRAME_COUNT; i++)
+		portal_frames[i] = get_portal_frame(i);
 	init_animation(game, FRAME_COUNT, FRAME_DELAY, portal_frames);
 	ft_printf("Game initialized successfully\n");
 	render_map(game);
