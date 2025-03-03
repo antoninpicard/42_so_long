@@ -6,7 +6,7 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:33:13 by anpicard          #+#    #+#             */
-/*   Updated: 2025/02/28 13:15:54 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:19:41 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	render_map(t_game *game)
 	mlx_destroy_image(game->mlx, game->images.exit_ground);
 	return (1);
 }
+
 
 int	init_game(t_game *game)
 {

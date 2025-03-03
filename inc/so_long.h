@@ -6,7 +6,7 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:03:17 by anpicard          #+#    #+#             */
-/*   Updated: 2025/02/28 12:33:34 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/03 08:12:28 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ typedef struct s_game
 	t_tile_images	images;
 	int				moves;
 	int				collected;
+	void			**img;
+	int				frame_count;
+	int				frame;
+	int				frame_delay;
 }					t_game;
 
 typedef struct s_validation
@@ -100,5 +104,11 @@ int					render_map(t_game *game);
 int					move_player(t_game *game, int keycode);
 void				*create_transparent_image(t_game *game, void *bg_img,
 						void *fg_img);
+void				build_frame_path(char *buffer, const char *folder,
+						int frame_number);
+void				init_animation(t_game *data, int frame_count,
+						int frame_delay, char **frames);
+void				*load_image(void *mlx, char *path);
+int					animate(void *param);
 
 #endif

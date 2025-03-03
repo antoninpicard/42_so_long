@@ -13,7 +13,7 @@ OBJ_DIR = obj
 INC_DIR = inc
 
 # Fichiers sources et objets
-SRCS = $(SRC_DIR)/animation.c $(SRC_DIR)/so_long.c
+SRCS = $(SRC_DIR)/animation.c $(SRC_DIR)/so_long.c $(SRC_DIR)/build_path.c
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Règle par défaut

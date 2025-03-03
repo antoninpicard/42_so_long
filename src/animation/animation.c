@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   animation.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/03 07:51:36 by anpicard          #+#    #+#             */
+/*   Updated: 2025/03/03 08:11:43 by anpicard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/so_long.h"
 
 void    *load_image(void *mlx, char *path)
@@ -17,9 +29,9 @@ void    *load_image(void *mlx, char *path)
 
 int animate(void *param)
 {
-    t_data *data;
+    t_game *data;
 
-    data = (t_data *)param;
+    data = (t_game *)param;
     mlx_clear_window(data->mlx, data->win);
     mlx_put_image_to_window(data->mlx, data->win,
         data->img[data->frame], 0, 0);
@@ -28,7 +40,7 @@ int animate(void *param)
     return (0);
 }
 
-void init_animation(t_data *data, int frame_count,
+void init_animation(t_game *data, int frame_count,
         int frame_delay, char **frames)
 {
     int i;

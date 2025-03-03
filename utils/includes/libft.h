@@ -6,7 +6,7 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:57:40 by anpicard          #+#    #+#             */
-/*   Updated: 2025/02/28 09:02:06 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/03 08:24:47 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+void	ft_strcpy(char *dest, const char *src);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+void	ft_strcat(char *dest, const char *src);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

@@ -12,10 +12,12 @@ OBJ_DIR = obj
 UTILS_DIR = utils
 MLX_DIR = minilibx-linux
 PARSE_DIR = src/parse
+ANIM_DIR = src/animation
 
 # Source files
 SRC_FILES = src/so_long.c src/utils.c src/game.c src/map.c src/player.c src/transparent.c \
-            $(PARSE_DIR)/map_parser.c $(PARSE_DIR)/rectangle_parser.c $(PARSE_DIR)/utils_parser.c $(PARSE_DIR)/validation.c
+            $(PARSE_DIR)/map_parser.c $(PARSE_DIR)/rectangle_parser.c $(PARSE_DIR)/utils_parser.c $(PARSE_DIR)/validation.c \
+			$(ANIM_DIR)/animation.c $(ANIM_DIR)/build_path.c
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 # Libraries
@@ -54,6 +56,7 @@ $(NAME): $(OBJ_DIR) $(LIBFT) $(MLX) $(OBJ_FILES)
 $(OBJ_DIR):
 	$(VERBOSE)mkdir -p $(OBJ_DIR)
 	$(VERBOSE)mkdir -p $(OBJ_DIR)/parse
+	$(VERBOSE)mkdir -p $(OBJ_DIR)/animation
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(eval CURR_FILE := $(shell echo $$(($(CURR_FILE) + 1))))
