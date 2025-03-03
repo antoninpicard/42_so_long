@@ -17,7 +17,7 @@ ANIM_DIR = src/animation
 # Source files
 SRC_FILES = src/so_long.c src/utils.c src/game.c src/map.c src/player.c src/transparent.c \
             $(PARSE_DIR)/map_parser.c $(PARSE_DIR)/rectangle_parser.c $(PARSE_DIR)/utils_parser.c $(PARSE_DIR)/validation.c \
-			$(ANIM_DIR)/animation.c $(ANIM_DIR)/build_path.c
+			$(ANIM_DIR)/animation.c 
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 # Libraries
