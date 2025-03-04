@@ -6,18 +6,15 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:33:13 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 14:41:33 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:24:38 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-#define FRAME_COUNT 7
-#define FRAME_DELAY 150000
-
 static char	*get_portal_frame(int index)
 {
-	static char	*portal_frames[] = {"textures/portal/frame_1.xpm",
+	char	*portal_frames[] = {"textures/portal/frame_1.xpm",
 			"textures/portal/frame_2.xpm", "textures/portal/frame_3.xpm",
 			"textures/portal/frame_4.xpm", "textures/portal/frame_5.xpm",
 			"textures/portal/frame_6.xpm", "textures/portal/frame_7.xpm", NULL};

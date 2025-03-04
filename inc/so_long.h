@@ -6,7 +6,7 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:03:17 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 14:32:54 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:24:49 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define ARROW_LEFT XK_Left
 # define ARROW_UP XK_Up
 # define ARROW_DOWN XK_Down
+# define FRAME_COUNT 7
+# define FRAME_DELAY 150000
 
 typedef struct s_position
 {
