@@ -15,7 +15,7 @@ INC_DIR := includes/
 STR_FILES := str/ft_strlen.c str/ft_strlcpy.c str/ft_strlcat.c str/ft_strchr.c \
 	str/ft_strrchr.c str/ft_strncmp.c str/ft_strnstr.c str/ft_strdup.c \
 	str/ft_substr.c str/ft_strjoin.c str/ft_strtrim.c str/ft_split.c \
-	str/ft_strmapi.c str/ft_striteri.c str/ft_strcat.c str/ft_strcpy.c
+	str/ft_strmapi.c str/ft_striteri.c
 
 MEM_FILES := mem/ft_memset.c mem/ft_bzero.c mem/ft_memcpy.c mem/ft_memmove.c \
 	mem/ft_memchr.c mem/ft_memcmp.c mem/ft_calloc.c

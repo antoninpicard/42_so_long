@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucnavar <lucnavar@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:21:43 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 10:43:01 by lucnavar         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:39:27 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	cleanup_game(t_game *game)
 		mlx_destroy_image(game->mlx, game->img_wall);
 	if (game->img_collectible)
 		mlx_destroy_image(game->mlx, game->img_collectible);
+	if (game->img_exit)
+		mlx_destroy_image(game->mlx, game->img_exit);
 	if (game->img_ground)
 		mlx_destroy_image(game->mlx, game->img_ground);
 	if (game->win)

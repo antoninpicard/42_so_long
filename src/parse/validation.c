@@ -59,7 +59,7 @@ int	validate_path(t_map *map)
 		return (0);
 	val.collectibles = 0;
 	val.exit_found = 0;
-	flood_fill(temp_grid, map->player_x, map->player_y, &val);
+	flood_fill(temp_grid, map->player_pos.x, map->player_pos.y, &val);
 	free_map_grid(&temp_grid, map->height);
 	return (val.collectibles == map->collectibles && val.exit_found);
 }

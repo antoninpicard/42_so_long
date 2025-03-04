@@ -6,7 +6,7 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:09:33 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/03 10:11:59 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:54:20 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static int	key_hook(int keycode, t_game *game)
 	if (keycode == ESC)
 		close_window(game);
 	else if (keycode == W || keycode == A || keycode == S || keycode == D)
-		handle_keypress(keycode, game);
+		move_player(game, keycode);
 	else if (keycode == ARROW_DOWN || keycode == ARROW_LEFT
 		|| keycode == ARROW_RIGHT || keycode == ARROW_UP)
-		handle_keypress(keycode, game);
+		move_player(game, keycode);
 	return (0);
 }
 

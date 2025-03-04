@@ -45,12 +45,12 @@ static int	check_map_line(char *line, t_map *map, int y)
 		if (line[x] == 'C')
 			map->collectibles++;
 		else if (line[x] == 'E')
-			map->exits++;
+			map->exit++;
 		else if (line[x] == 'P')
 		{
-			map->players++;
-			map->player_x = x;
-			map->player_y = y;
+			map->player++;
+			map->player_pos.x = x;
+			map->player_pos.y = y;
 		}
 		x++;
 	}
@@ -110,7 +110,7 @@ int	parse_map(t_map *map, char *map_path)
 		free_map_grid(&map->grid, map->height);
 		return (0);
 	}
-	if (map->collectibles < 1 || map->exits != 1 || map->players != 1)
+	if (map->collectibles < 1 || map->exit != 1 || map->player != 1)
 	{
 		print_error("Invalid map elements");
 		free_map_grid(&map->grid, map->height);

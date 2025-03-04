@@ -6,7 +6,7 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:03:17 by anpicard          #+#    #+#             */
-/*   Updated: 2025/03/04 09:24:49 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:33:34 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,85 +35,70 @@
 # define ARROW_LEFT XK_Left
 # define ARROW_UP XK_Up
 # define ARROW_DOWN XK_Down
-# define FRAME_COUNT 7
-# define FRAME_DELAY 150000
 
 typedef struct s_position
 {
-	int		x;
-	int		y;
-}			t_position;
+	int				x;
+	int				y;
+}					t_position;
 
 typedef struct s_map
 {
-	char	**grid;
-	int		width;
-	int		height;
-	int		collectibles;
-	int		exits;
-	int		players;
-	int		player_x;
-	int		player_y;
-}			t_map;
+	char			**grid;
+	int				width;
+	int				height;
+	int				collectibles;
+	int				exit;
+	int				player;
+	t_position		player_pos;
+	char			last_move;
+}					t_map;
+
+typedef struct s_tile_images
+{
+	void			*player_ground;
+	void			*collect_ground;
+	void			*exit_ground;
+}					t_tile_images;
 
 typedef struct s_game
 {
-	void	*mlx;
-	void	*win;
-	void	*img_player;
-	void	*img_wall;
-	void	*img_ground;
-	void	*img_collectible;
-	void	*img_exit;
-	t_map	map;
-	int		moves;
-	int		is_exiting;
-	void	**img;
-	int		frame;
-	int		frame_count;
-	int		frame_delay;
-}			t_game;
+	void			*mlx;
+	void			*win;
+	void			*img_player;
+	void			*img_wall;
+	void			*img_ground;
+	void			*img_collectible;
+	void			*img_exit;
+	t_map			map;
+	t_tile_images	images;
+	int				moves;
+	int				collected;
+}					t_game;
 
 typedef struct s_validation
 {
-	int		collectibles;
-	int		exit_found;
-}			t_validation;
+	int				collectibles;
+	int				exit_found;
+}					t_validation;
 
-int			init_map(t_map *map, char *map_path);
-void		free_map_grid(char ***grid, int height);
-void		cleanup_gnl(int fd);
-int			check_extra_lines(t_map *map, int fd);
-int			parse_map(t_map *map, char *map_path);
-int			get_map_height(char *map_path);
-int			read_map_lines(t_map *map, int fd);
-void		check_file_extension(char *map_path);
-int			check_rectangle(t_map *map);
-int			validate_path(t_map *map);
-void		print_error(char *message);
-void		cleanup_game(t_game *game);
-int			close_window(t_game *game);
-int			init_game(t_game *game);
-
-// Render functions
-void		put_image(t_game *game, void *img, int x, int y);
-int			render_map(t_game *game);
-int			move_player(t_game *game, int keycode);
-void		*create_transparent_image(t_game *game, void *bg_img, void *fg_img);
-
-// Animation functions
-void		build_frame_path(char *buffer, const char *folder,
-				int frame_number);
-void		init_animation(t_game *data, int frame_count, int frame_delay,
-				char **frames);
-void		*load_image(void *mlx, char *path);
-int			animate(void *param);
-void		init_portal_animation(t_game *game);
-void		init_player_animation(t_game *game);
-void		init_collectible_animation(t_game *game);
-
-// Player functions
-int			handle_keypress(int keycode, t_game *game);
-int			is_valid_move(t_game *game, int x, int y);
+int					init_map(t_map *map, char *map_path);
+void				free_map_grid(char ***grid, int height);
+void				cleanup_gnl(int fd);
+int					check_extra_lines(t_map *map, int fd);
+int					parse_map(t_map *map, char *map_path);
+int					get_map_height(char *map_path);
+int					read_map_lines(t_map *map, int fd);
+void				check_file_extension(char *map_path);
+int					check_rectangle(t_map *map);
+int					validate_path(t_map *map);
+void				print_error(char *message);
+void				cleanup_game(t_game *game);
+int					close_window(t_game *game);
+int					init_game(t_game *game);
+int					render_map(t_game *game);
+int					move_player(t_game *game, int keycode);
+void				*create_transparent_image(t_game *game, void *bg_img,
+						void *fg_img);
 
 #endif
