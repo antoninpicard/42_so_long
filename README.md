@@ -63,6 +63,3 @@ Le projet utilise un Makefile avec les règles suivantes :
 - `make fclean` : Supprime les fichiers objets et l'exécutable
 - `make re` : Recompile le projet
 - `make force` : Force la recompilation de tous les fichiers
-
-## Auteur
-- anpicard
