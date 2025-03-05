@@ -12,7 +12,7 @@ So_long est un petit jeu 2D développé dans le cadre du cursus de l'école 42. 
 - Gestion des fichiers de carte au format .ber
 
 ## Prérequis
-- GCC ou Clang
+- CC ou Clang
 - Make
 - MinilibX (incluse dans le projet)
 - Bibliothèques X11 pour Linux
@@ -20,7 +20,7 @@ So_long est un petit jeu 2D développé dans le cadre du cursus de l'école 42. 
 ## Installation
 ```bash
 # Cloner le dépôt
-git clone [https://github.com/votre-username/so_long.git](https://github.com/antoninpicard/42_so_long)
+git clone https://github.com/antoninpicard/42_so_long
 cd so_long
 
 # Compiler le projet
