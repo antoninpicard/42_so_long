@@ -60,7 +60,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(VERBOSE)printf "$(YELLOW)Compiling [%3d%%] %-33s$(DEF_COLOR)\r" $$(($(CURR_FILE) * 100 / $(TOTAL_FILES))) $(notdir $<)
 	$(VERBOSE)$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(LIBFT):
+$(LIBFT): force
 	$(VERBOSE)make -C $(UTILS_DIR)
 
 $(MLX):
@@ -76,6 +76,11 @@ fclean: clean
 	$(VERBOSE)rm -f $(NAME)
 	$(VERBOSE)make -C $(UTILS_DIR) fclean
 	$(VERBOSE)printf "$(BLUE)Executable '$(NAME)' removed$(DEF_COLOR)\n"
+
+force:
+	$(VERBOSE)make -C $(UTILS_DIR)
+	$(VERBOSE)make -C $(MLX_DIR)
+	$(VERBOSE)$(CC) $(CFLAGS) $(OBJ_FILES) -L$(UTILS_DIR) -lft $(MLX) $(MLX_FLAGS) -o $(NAME)
 
 re:
 	$(VERBOSE)$(MAKE) fclean
