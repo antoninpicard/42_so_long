@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: anpicard <anpicard@student.42.fr>          +#+  +:+       +#+       #
+#                                                 +#+#+#+#+#+   +#+           #
+#    Created: 2024/03/05 10:10:04 by anpicard          #+#    #+#            #
+#    Updated: 2024/03/05 10:10:04 by anpicard         ###   ########.fr      #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = so_long
 
 # Compiler and flags
@@ -25,66 +37,62 @@ MLX = $(MLX_DIR)/libmlx.a
 # Include paths
 INCLUDES = -I$(INC_DIR) -I$(UTILS_DIR)/includes -I$(MLX_DIR)
 
-# Colors and formatting
+# Colors
 DEF_COLOR = \033[0;39m
 YELLOW = \033[0;93m
 GREEN = \033[0;92m
 BLUE = \033[0;94m
 CYAN = \033[0;96m
+RED = \033[0;91m
 BOLD = \033[1m
 
 # Progress bar variables
 TOTAL_FILES = $(words $(SRC_FILES))
 CURR_FILE = 0
 
-# Silent mode (make V=1 for verbose output)
-ifndef V
-	MAKEFLAGS += --silent
-	VERBOSE = @
-else
-	VERBOSE =
-endif
-
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(LIBFT) $(MLX) $(OBJ_FILES)
-	$(VERBOSE)$(CC) $(OBJ_FILES) -L$(UTILS_DIR) -lft $(MLX) $(MLX_FLAGS) -o $(NAME)
-	$(VERBOSE)printf "\n$(GREEN)$(BOLD)Executable '$(NAME)' compiled successfully$(DEF_COLOR)\n"
+$(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
+	@if [ ! -f $(NAME) ] || [ -n "$?" ]; then \
+		echo "$(YELLOW)Linking executable $(NAME)...$(DEF_COLOR)"; \
+		$(CC) $(OBJ_FILES) -L$(UTILS_DIR) -lft $(MLX) $(MLX_FLAGS) -o $(NAME) && \
+		echo "$(GREEN)$(BOLD)Executable '$(NAME)' compiled successfully$(DEF_COLOR)"; \
+	fi
 
 $(OBJ_DIR):
-	$(VERBOSE)mkdir -p $(OBJ_DIR)
-	$(VERBOSE)mkdir -p $(OBJ_DIR)/parse
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/parse
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(eval CURR_FILE := $(shell echo $$(($(CURR_FILE) + 1))))
-	$(VERBOSE)printf "$(YELLOW)Compiling [%3d%%] %-33s$(DEF_COLOR)\r" $$(($(CURR_FILE) * 100 / $(TOTAL_FILES))) $(notdir $<)
-	$(VERBOSE)$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(eval CURR_FILE := $(shell echo $$(($(CURR_FILE) + 1))))
+	@echo "$(YELLOW)Compiling [$$(echo "$(CURR_FILE) * 100 / $(TOTAL_FILES)" | bc)%%] $(notdir $<)$(DEF_COLOR)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(LIBFT): force
-	$(VERBOSE)make -C $(UTILS_DIR)
+$(LIBFT): FORCE
+	@$(MAKE) -s -C $(UTILS_DIR)
 
 $(MLX):
-	$(VERBOSE)make -C $(MLX_DIR)
+	@echo "$(BLUE)Compiling minilibx...$(DEF_COLOR)"
+	@$(MAKE) -C $(MLX_DIR)
 
 clean:
-	$(VERBOSE)rm -rf $(OBJ_DIR)
-	$(VERBOSE)make -C $(UTILS_DIR) clean
-	$(VERBOSE)make -C $(MLX_DIR) clean
-	$(VERBOSE)printf "$(CYAN)Object files cleaned$(DEF_COLOR)\n"
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) -C $(UTILS_DIR) clean
+	@$(MAKE) -C $(MLX_DIR) clean
+	@echo "$(CYAN)Object files cleaned$(DEF_COLOR)"
 
 fclean: clean
-	$(VERBOSE)rm -f $(NAME)
-	$(VERBOSE)make -C $(UTILS_DIR) fclean
-	$(VERBOSE)printf "$(BLUE)Executable '$(NAME)' removed$(DEF_COLOR)\n"
+	@rm -f $(NAME)
+	@$(MAKE) -C $(UTILS_DIR) fclean
+	@echo "$(BLUE)Executable '$(NAME)' removed$(DEF_COLOR)"
 
-force:
-	$(VERBOSE)make -C $(UTILS_DIR)
-	$(VERBOSE)make -C $(MLX_DIR)
-	$(VERBOSE)$(CC) $(CFLAGS) $(OBJ_FILES) -L$(UTILS_DIR) -lft $(MLX) $(MLX_FLAGS) -o $(NAME)
+re: fclean all
+	@echo "$(GREEN)$(BOLD)Project rebuilt successfully$(DEF_COLOR)"
 
-re:
-	$(VERBOSE)$(MAKE) fclean
-	$(VERBOSE)$(MAKE) all
-	$(VERBOSE)printf "$(GREEN)$(BOLD)Project rebuilt successfully$(DEF_COLOR)\n"
+FORCE:
 
-.PHONY: all clean fclean re
+force: $(LIBFT) $(MLX) $(OBJ_FILES)
+	@$(CC) $(OBJ_FILES) -L$(UTILS_DIR) -lft $(MLX) $(MLX_FLAGS) -o $(NAME)
+	@echo "$(GREEN)$(BOLD)Executable '$(NAME)' compiled successfully$(DEF_COLOR)"
+
+.PHONY: all clean fclean re force FORCE
