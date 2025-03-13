@@ -6,7 +6,7 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:33:13 by anpicard          #+#    #+#             */
-/*   Updated: 2025/02/28 13:15:54 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:35:27 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void	render_tile(t_game *game, t_tile_images *imgs, int pos[2])
 		put_image(game, game->img_wall, pos[0], pos[1]);
 	else if (game->map.grid[pos[1]][pos[0]] == 'P')
 	{
-		if (game->map.last_move == 'E' && game->collected != game->map.collectibles)
+		if (game->map.last_move == 'E'
+			&& game->collected != game->map.collectibles)
 			put_image(game, imgs->player_exit, pos[0], pos[1]);
 		else
 			put_image(game, imgs->player_ground, pos[0], pos[1]);
@@ -52,8 +53,8 @@ int	render_map(t_game *game)
 			game->img_ground, game->img_collectible);
 	game->images.exit_ground = create_transparent_image(game, game->img_ground,
 			game->img_exit);
-	game->images.player_exit = create_transparent_image(game,
-			game->img_exit, game->img_player);
+	game->images.player_exit = create_transparent_image(game, game->img_exit,
+			game->img_player);
 	if (!game->images.player_ground || !game->images.collect_ground
 		|| !game->images.exit_ground || !game->images.player_exit)
 		return (0);
@@ -68,8 +69,7 @@ int	render_map(t_game *game)
 	mlx_destroy_image(game->mlx, game->images.player_ground);
 	mlx_destroy_image(game->mlx, game->images.collect_ground);
 	mlx_destroy_image(game->mlx, game->images.exit_ground);
-	mlx_destroy_image(game->mlx, game->images.player_exit);
-	return (1);
+	return (mlx_destroy_image(game->mlx, game->images.player_exit), 1);
 }
 
 int	init_game(t_game *game)
