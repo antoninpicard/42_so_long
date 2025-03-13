@@ -30,7 +30,12 @@ static void	render_tile(t_game *game, t_tile_images *imgs, int pos[2])
 	else if (game->map.grid[pos[1]][pos[0]] == '1')
 		put_image(game, game->img_wall, pos[0], pos[1]);
 	else if (game->map.grid[pos[1]][pos[0]] == 'P')
-		put_image(game, imgs->player_ground, pos[0], pos[1]);
+	{
+		if (game->map.last_move == 'E' && game->collected != game->map.collectibles)
+			put_image(game, imgs->player_exit, pos[0], pos[1]);
+		else
+			put_image(game, imgs->player_ground, pos[0], pos[1]);
+	}
 	else if (game->map.grid[pos[1]][pos[0]] == 'C')
 		put_image(game, imgs->collect_ground, pos[0], pos[1]);
 	else if (game->map.grid[pos[1]][pos[0]] == 'E')
@@ -47,8 +52,10 @@ int	render_map(t_game *game)
 			game->img_ground, game->img_collectible);
 	game->images.exit_ground = create_transparent_image(game, game->img_ground,
 			game->img_exit);
+	game->images.player_exit = create_transparent_image(game,
+			game->img_exit, game->img_player);
 	if (!game->images.player_ground || !game->images.collect_ground
-		|| !game->images.exit_ground)
+		|| !game->images.exit_ground || !game->images.player_exit)
 		return (0);
 	pos[1] = 0;
 	while (pos[1] < game->map.height)
@@ -61,6 +68,7 @@ int	render_map(t_game *game)
 	mlx_destroy_image(game->mlx, game->images.player_ground);
 	mlx_destroy_image(game->mlx, game->images.collect_ground);
 	mlx_destroy_image(game->mlx, game->images.exit_ground);
+	mlx_destroy_image(game->mlx, game->images.player_exit);
 	return (1);
 }
 

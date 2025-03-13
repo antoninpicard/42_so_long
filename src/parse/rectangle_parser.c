@@ -42,8 +42,6 @@ static int	check_wall_y(t_map *map, int x)
 
 int	check_rectangle(t_map *map)
 {
-	if (map->height == map->width)
-		return (0);
 	if (!check_wall_x(map, 0))
 		return (0);
 	if (!check_wall_x(map, map->height - 1))

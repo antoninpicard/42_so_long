@@ -59,6 +59,7 @@ typedef struct s_tile_images
 	void			*player_ground;
 	void			*collect_ground;
 	void			*exit_ground;
+	void			*player_exit;
 }					t_tile_images;
 
 typedef struct s_game
